@@ -13,6 +13,7 @@ spec:
         revision: new-test
         files:
           - path: "source-apps/config.json" 
+          - path: "source-apps/**config.json"
   template:
     metadata:
       name: '{{path.Base .file}}'  # Name based on config.json

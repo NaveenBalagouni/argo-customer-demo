@@ -4,7 +4,7 @@ metadata:
   name: single-git-source
   namespace: argocd
   annotations:
-     my-test: "from-ui"
+     my-test: "from-ui-test"
   labels:
      for: jpmc
 spec:

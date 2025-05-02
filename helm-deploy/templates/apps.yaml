@@ -19,4 +19,30 @@ spec:
       prune: true
     syncOptions:
       - CreateNamespace=true
+      
+{{- else }}
+# Hook Job that deletes Argo CD apps
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: delete-applications
+  namespace: argocd
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    spec:
+      containers:
+        - name: cleanup
+          image: bitnami/kubectl:latest
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Deleting Argo CD applications..."
+              kubectl delete application test-suite -n argocd --ignore-not-found
+              kubectl delete applicationsets test-suite-root-appset -n argocd --ignore-not-found
+      restartPolicy: Never
+
 {{- end }}

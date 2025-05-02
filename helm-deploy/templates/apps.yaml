@@ -1,12 +1,12 @@
 {{- if .Values.deployAllApps }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
-metadata: 
+metadata:
   name: test-suite
   namespace: argocd
 spec:
   project: default
-  source:  
+  source:
     repoURL: https://github.com/OpsMx/argo-customer-demo.git
     targetRevision: helm-deploy-all
     path: stack
@@ -23,12 +23,13 @@ spec:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: delete-applications-{{ randAlphaNum 5 | lower }}
+  name: delete-argocd-resources
   namespace: argocd
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade
     "helm.sh/hook-delete-policy": hook-succeeded
 spec:
+  backoffLimit: 0
   template:
     spec:
       containers:
@@ -39,7 +40,7 @@ spec:
             - -c
             - |
               echo "Deleting Argo CD applications..."
-              kubectl delete application test-suite -n argocd --ignore-not-found
-              kubectl delete applicationsets test-suite-root-appset -n argocd --ignore-not-found
+              kubectl delete applications.argoproj.io --all -n argocd --ignore-not-found
+              kubectl delete applicationsets.argoproj.io --all -n argocd --ignore-not-found
       restartPolicy: Never
 {{- end }}

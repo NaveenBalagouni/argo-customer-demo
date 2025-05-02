@@ -1,25 +1,22 @@
-{{- if .Values.deployAllApps }}
-{{- range .Values.applications }}
----
+{{- if .Values.deployApplication }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
-metadata:
-  name: {{ .name }}
+metadata: 
+  name: test-suite
   namespace: argocd
 spec:
   project: default
-  source:
+  source:  
     repoURL: https://github.com/OpsMx/argo-customer-demo.git
     targetRevision: new-test
-    path: {{ .path }}
+    path: stack
   destination:
     server: https://kubernetes.default.svc
-    namespace: {{ .namespace }}
+    namespace: test
   syncPolicy:
     automated:
       selfHeal: true
       prune: true
     syncOptions:
       - CreateNamespace=true
-{{- end }}
 {{- end }}

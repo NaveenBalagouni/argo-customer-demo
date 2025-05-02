@@ -8,7 +8,7 @@ spec:
   project: default
   source:  
     repoURL: https://github.com/OpsMx/argo-customer-demo.git
-    targetRevision: new-test
+    targetRevision: helm-deploy-all
     path: stack
   destination:
     server: https://kubernetes.default.svc

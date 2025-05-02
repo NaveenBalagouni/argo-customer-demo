@@ -25,7 +25,7 @@ spec:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: delete-applications
+  name: delete-applications-{{ randAlphaNum 5 | lower }}
   namespace: argocd
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade

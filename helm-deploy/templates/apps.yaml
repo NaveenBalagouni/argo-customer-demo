@@ -1,4 +1,4 @@
-{{- if .Values.deployApplication }}
+{{- if .Values.deployAllApps }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata: 

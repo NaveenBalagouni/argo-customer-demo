@@ -25,9 +25,9 @@ kind: Job
 metadata:
   name: delete-argocd-resources-{{ randAlphaNum 5 | lower }}
   namespace: argocd
-  annotations:
-    "helm.sh/hook": pre-upgrade, pre-install  # Runs before upgrade and install
-    "helm.sh/hook-delete-policy": hook-succeeded  # Deletes the job after it succeeds
+  # annotations:
+  #   "helm.sh/hook": pre-upgrade, pre-install  # Runs before upgrade and install
+  #   "helm.sh/hook-delete-policy": hook-succeeded  # Deletes the job after it succeeds
 spec:
   backoffLimit: 4  # Allow retry up to 4 times
   template:
